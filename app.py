@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/',methods=['GET'])
 def index():
-    jsonify(data)
+    return jsonify(data)
 
 @app.route('/total',methods=['GET'])
 def res():
