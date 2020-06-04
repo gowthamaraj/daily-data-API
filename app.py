@@ -79,5 +79,6 @@ def excel():
         return "Error: File cannot be generated at the moment"  
 
 if __name__ == "__main__":
-    app.debug = True
-    app.run(host="0.0.0.0")
+    # app.debug = True
+    # app.run(host="0.0.0.0")
+    app.config.from_pyfile('config.py')
