@@ -13,7 +13,7 @@ app = Flask(__name__)
 def res():
     data_filtered = []
     if 'day' in request.args:
-        try:
+        # try:
             day = request.args['day']
             day = datetime.strptime(day, '%d-%m-%Y')
             print(day.date())
@@ -27,8 +27,8 @@ def res():
                 return jsonify(data_filtered)
             else:
                 return "No response from machstatz API"
-        except:
-            return "Error: Please provide a valide date"
+        # except:
+        #     return "Error: Please provide a valide date"
     else:
         return "Error: Please specify a day"
 
