@@ -16,7 +16,6 @@ def res():
         # try:
             day = request.args['day']
             day = datetime.strptime(day, '%d-%m-%Y')
-            print(day.date())
             if len(data) > 0:
                 for item in data:
                     item_copy = item.copy()
