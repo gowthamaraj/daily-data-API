@@ -9,6 +9,10 @@ data = json.loads(requests.get("https://assignment-machstatz.herokuapp.com/excel
 
 app = Flask(__name__) 
 
+@app.route('/',methods=['GET'])
+def index():
+    jsonify(data)
+
 @app.route('/total',methods=['GET'])
 def res():
     data_filtered = []
