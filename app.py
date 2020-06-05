@@ -5,29 +5,42 @@ from datetime import datetime as dt
 import xlsxwriter
 import os
 
+# getting the data from the machstatz API
 data = json.loads(requests.get("https://assignment-machstatz.herokuapp.com/excel").text) 
 
+#calling the constructor to create the app
 app = Flask(__name__) 
 
+#endpoint for GET / 
 @app.route('/',methods=['GET'])
 def index():
     return jsonify(data)
 
+#endpoint for GET /total
 @app.route('/total',methods=['GET'])
 def res():
-    data_filtered = []
     if 'day' in request.args:
         try:
             day = request.args['day']
             day = dt.strptime(day, '%d-%m-%Y')
+            #conv. the string given by user to datetime object
             if len(data) > 0:
+                #check if the data is received from the machstatz API
+                totalWeight = 0
+                totalLength = 0
+                totalQuantity = 0
                 for item in data:
                     item_copy = item.copy()
+                    #make a copy of the item to not spoil the original data
                     item_date = dt.fromisoformat(item_copy["DateTime"].replace("Z", ""))
                     if day.date() == item_date.date():
-                        item_copy.pop("DateTime")
-                        data_filtered.append(item_copy)
-                return jsonify(data_filtered)
+                        #check if it is the same day
+                        totalWeight += item_copy["Weight"]
+                        totalLength += item_copy["Length"]
+                        totalQuantity += item_copy["Quantity"]
+                        #making sum of the required fields
+                data_total = {"totalWeight":totalWeight,"totalLength":totalLength,"totalQuantity":totalQuantity}
+                return jsonify(data_total)
             else:
                 return jsonify({"Error":"No response from machstatz API"})
         except:
@@ -39,32 +52,39 @@ def res():
 def excel():
     try:
         workbook = xlsxwriter.Workbook('report.xlsx')
-        first_date = None
-        sheet =1
+        #create an excel file
+        prev_date = None
+        #for checking whether the next data in the array is same data as the previous one
         row =0
         col = 0
+        #initalize to the start of the file
         for item in data:
             item_copy = item.copy()
+            #make a copy of the item to not spoil the original data
             item_date = dt.fromisoformat(item_copy["DateTime"].replace("Z", ""))
             current_date = item_date.date()
-            if current_date != first_date:
+            if current_date != prev_date:
+                #if not same date, make a new sheet
                 worksheet = workbook.add_worksheet(str(current_date))
                 row = 0
                 col = 0
+                #initalize to the start of the file
                 worksheet.write(row, col, 'DateTime') 
                 worksheet.write(row, col + 1, 'Length') 
                 worksheet.write(row, col + 2, 'Weight') 
                 worksheet.write(row, col + 3, 'Quantity')
                 row+=1
                 col=0
+                #next row
                 worksheet.write(row, col, item_copy['DateTime']) 
                 worksheet.write(row, col + 1, item_copy['Length']) 
                 worksheet.write(row, col + 2, item_copy['Weight']) 
                 worksheet.write(row, col + 3, item_copy['Quantity'])
                 row+=1
                 col=0
-                sheet+=1
-                first_date = current_date 
+                #next row
+                prev_date = current_date 
+                #make current data as previous data
             else:
                 worksheet.write(row, col, item_copy['DateTime']) 
                 worksheet.write(row, col + 1, item_copy['Length']) 
@@ -72,7 +92,9 @@ def excel():
                 worksheet.write(row, col + 3, item_copy['Quantity']) 
                 row+=1
                 col=0
-                first_date = current_date  
+                #next row
+                prev_date = current_date  
+                #make current data as previous data
         workbook.close()
         return send_from_directory(os.getcwd(),'report.xlsx', as_attachment=True) 
     except:
