@@ -1,7 +1,7 @@
 from flask import Flask,jsonify,request,send_from_directory
 import json
 import requests
-from datetime import datetime
+from datetime import dt
 import xlsxwriter
 import os
 
@@ -13,7 +13,7 @@ app = Flask(__name__)
 def index():
     for item in data:
             item_copy = item.copy()
-            item_date = datetime.fromisoformat(item_copy["DateTime"].replace("Z", ""))
+            item_date = dt.fromisoformat(item_copy["DateTime"].replace("Z", ""))
     return jsonify(data)
 
 @app.route('/total',methods=['GET'])
@@ -22,11 +22,11 @@ def res():
     if 'day' in request.args:
         # try:
             day = request.args['day']
-            day = datetime.strptime(day, '%d-%m-%Y')
+            day = dt.strptime(day, '%d-%m-%Y')
             if len(data) > 0:
                 for item in data:
                     item_copy = item.copy()
-                    item_date = datetime.fromisoformat(item_copy["DateTime"].replace("Z", ""))
+                    item_date = dt.fromisoformat(item_copy["DateTime"].replace("Z", ""))
                     if day.date() == item_date.date():
                         item_copy.pop("DateTime")
                         data_filtered.append(item_copy)
@@ -48,7 +48,7 @@ def excel():
         col = 0
         for item in data:
             item_copy = item.copy()
-            item_date = datetime.fromisoformat(item_copy["DateTime"].replace("Z", ""))
+            item_date = dt.fromisoformat(item_copy["DateTime"].replace("Z", ""))
             current_date = item_date.date()
             if current_date != first_date:
                 worksheet = workbook.add_worksheet(str(current_date))
