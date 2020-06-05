@@ -17,7 +17,7 @@ def index():
 def res():
     data_filtered = []
     if 'day' in request.args:
-        # try:
+        try:
             day = request.args['day']
             day = dt.strptime(day, '%d-%m-%Y')
             if len(data) > 0:
@@ -30,8 +30,8 @@ def res():
                 return jsonify(data_filtered)
             else:
                 return "No response from machstatz API"
-        # except:
-        #     return "Error: Please provide a valide date"
+        except:
+            return "Error: Please provide a valide date"
     else:
         return "Error: Please specify a day"
 
