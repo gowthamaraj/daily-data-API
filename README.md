@@ -21,36 +21,51 @@ Follow the steps below to run the project on your local dev environment.
 ```
 ## API endpoints
 These endpoints allow you to get data based on your request parameters from the source.
+
 ### GET
  - {baseURL}`/`
  - {baseURL}`/total?day=<date>`
  - {baseURL}`/excelreport`
+ 
 #### GET /
 **Parameters**
 |Name|Required|Type|Description|
 |----------:|:--------:|:-------:|---------- |
 |`None` | - | -  | -|
+
 **Response**
+
 [
 {"DateTime":"2020-06-01T10:00:00Z","Length":0.0,"Quantity":1746,"Weight":0.0},{"DateTime":"2020-06-01T09:00:00Z","Length":0.0,"Quantity":4063,"Weight":0.0}
 ...]
+
 #### GET /total
+
 **Parameters**
+
 |Name|Required|Type|Description|
 |----------:|:--------:|:-------:|---------- |
-|`day` | required | String  | day=<date>, data must be in the format of `day:month:year(dd-mm-yyyy)`. for example, __31-05-2020__
-|
+|`day` | required | String  | day= `(date)` , data must be in the format of `day:month:year(dd-mm-yyyy)`. for example, __31-05-2020__|
+ 
 **Response**
+
 [
-{"Length":943791.259,"Quantity":4043,"Weight":254.842},{"Length":1310686.054,"Quantity":4079,"Weight":283.239}
+{"Length":943791.259,"Quantity":4043,"Weight":254.842},
+{"Length":1310686.054,"Quantity":4079,"Weight":283.239}
 ...]
+
 #### GET /excelreport
+
 **Parameters**
+
 |Name|Required|Type|Description|
 |----------:|:--------:|:-------:|---------- |
 |`None` | - | -  | -|
+
 **Response**
+
 ![Excel](https://lh3.googleusercontent.com/proxy/8XngzW9va31cUXThL17BfzDo1S62CbkxgABwASpLXEovgYieHboh1DcE6HHPDNoPGPck1MCWa6lCx3f0KsL9y8BMH3h7mPETdzvvgrNvQIxyCxpQhlYO4FpiRTReANYbpndzLmK1u5wwC6g)
+
 ## Interactions
 ### Postman 
 ![](screenshot/1.PNG)
