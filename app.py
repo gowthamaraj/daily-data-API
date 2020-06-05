@@ -11,9 +11,6 @@ app = Flask(__name__)
 
 @app.route('/',methods=['GET'])
 def index():
-    for item in data:
-            item_copy = item.copy()
-            item_date = dt.fromisoformat(item_copy["DateTime"].replace("Z", ""))
     return jsonify(data)
 
 @app.route('/total',methods=['GET'])
