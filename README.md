@@ -45,7 +45,7 @@ These endpoints allow you to get data based on your request parameters from the 
 
 |Name|Required|Type|Description|
 |----------:|:--------:|:-------:|---------- |
-|`day` | required | String  | day=<date>, data must be in the format of `day:month:year(dd-mm-yyyy)`. for example, __31-05-2020__|
+|`day` | required | String  | day= `(date)` , data must be in the format of `day:month:year(dd-mm-yyyy)`. for example, __31-05-2020__|
  
 **Response**
 
