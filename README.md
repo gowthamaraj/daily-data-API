@@ -49,10 +49,11 @@ These endpoints allow you to get data based on your request parameters from the 
  
 **Response**
 
-[
-{"Length":943791.259,"Quantity":4043,"Weight":254.842},
-{"Length":1310686.054,"Quantity":4079,"Weight":283.239}
-...]
+{
+    "totalLength": 15098240.152999999,
+    "totalQuantity": 91448,
+    "totalWeight": 3704.623
+}
 
 #### GET /excelreport
 
