@@ -29,11 +29,11 @@ def res():
                         data_filtered.append(item_copy)
                 return jsonify(data_filtered)
             else:
-                return "No response from machstatz API"
+                return jsonify({"Error":"No response from machstatz API"})
         except:
-            return "Error: Please provide a valide date"
+            return jsonify({"Error":"Please provide a valide date"})
     else:
-        return "Error: Please specify a day"
+        return jsonify({"Error":"Please specify a day"})
 
 @app.route('/excelreport',methods=['GET'])
 def excel():
@@ -76,7 +76,8 @@ def excel():
         workbook.close()
         return send_from_directory(os.getcwd(),'report.xlsx', as_attachment=True) 
     except:
-        return "Error: File cannot be generated at the moment"  
+        return jsonify({"Error":"File cannot be generated at the moment"})
 
 if __name__ == "__main__":
     app.config.from_pyfile('config.py')
+    app.run()
