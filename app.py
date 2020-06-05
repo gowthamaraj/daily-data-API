@@ -1,7 +1,7 @@
 from flask import Flask,jsonify,request,send_from_directory
 import json
 import requests
-from datetime import dt
+from datetime import datetime as dt
 import xlsxwriter
 import os
 
